@@ -1,0 +1,205 @@
+const {app, BrowserWindow, globalShortcut, ipcMain, dialog } =require('electron');//引入electron
+
+let win;
+let windowConfig = {
+    width:1000,
+    height:700,
+    resizable: true,
+    // transparent: true,
+    maximizable: false,
+    minimizable: false,
+    // fullscreen: true, 
+    hasShadow:false,
+    frame: false,
+    //electron 5.0以上需要添加
+    webPreferences:{
+      nodeIntegration: true 
+    } 
+};//窗口配置程序运行窗口的大小
+const  {autoUpdater}=require('electron-updater');
+
+function createWindow(){
+  win = new BrowserWindow(windowConfig);//创建一个窗口
+  win.loadURL(`file://${__dirname}/index.html`);//在窗口内要展示的内容index.html 就是打包生成的index.html
+  // win.loadURL('http://192.168.0.27:8080');
+  win.webContents.openDevTools();  //开启调试工具
+  win.on('close',() => {
+    //回收BrowserWindow对象
+    win = null;
+  })
+
+  // globalShortcut.register('CommandOrControl+Shift+L', () => {
+  //   let focusWin = BrowserWindow.getFocusedWindow()
+  //   focusWin && focusWin.toggleDevTools()
+  // })
+
+
+
+  // win.on('resize',() => {
+  //   win.reload();
+  // })
+}
+
+app.on('ready',createWindow)
+app.on('window-all-closed',() => {
+  app.quit();
+});
+app.on('activate',() => {
+  if(win == null){
+    createWindow();
+  }
+})
+
+ipcMain.on('max', e=> {
+  console.log("aaaabbbbb")
+  if (win.isMaximized()) {
+    win.unmaximize()
+  } else {
+    win.maximize()
+  }
+})
+
+ipcMain.on("updata",()=>{
+  //执行自动更新检查
+  // let myNotification = new Notification('标题', {
+  //   body: '通知正文内容'
+  // });
+  updateHandle();
+})
+
+function updateHandle() {
+  let message = {
+    error: '检查更新出错',
+    checking: '正在检查更新……',
+    updateAva: '检测到新版本，正在下载……',
+    updateNotAva: '现在使用的就是最新版本，不用更新',
+  };
+
+  const uploadUrl = "http://oa.91118.com/eval";
+  autoUpdater.setFeedURL(uploadUrl);
+
+  autoUpdater.on('error', function (error) {
+    // console.log(autoUpdater.error);
+    sendUpdateMessage("122344")
+    sendUpdateMessage(autoUpdater)
+    sendUpdateMessage(message.error)
+  })
+
+  autoUpdater.on('checking-for-update', function () {
+    sendUpdateMessage(autoUpdater,"abc");
+    sendUpdateMessage(uploadUrl+"-1")
+    sendUpdateMessage(message.checking)
+  })
+
+  autoUpdater.on('update-available', function (info) {
+    sendUpdateMessage(message.updateAva)
+  })
+
+  autoUpdater.on('update-not-available', function (info) {
+    sendUpdateMessage(message.updateNotAva)
+  })
+
+  // 更新下载进度事件
+  autoUpdater.on('download-progress', function (progressObj) {
+    win.webContents.send('downloadProgress', progressObj)
+  })
+
+  autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
+
+    // ipcMain.on('isUpdateNow', (e, arg) => {
+    //   //some code here to handle event
+    //   autoUpdater.quitAndInstall();
+    // });
+
+    // win.webContents.send('isUpdateNow')
+    
+    const dialogOpts = {
+      type: 'info',
+      buttons: ['重启更新', '稍后'],
+      title: '发现新版本',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      detail: '发现有新的版本，建议立即更新！'
+    }
+  
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    })
+  })
+    
+  autoUpdater.checkForUpdates()
+}
+
+
+app.on('ready',function (){
+  //updateHandle()
+})
+
+
+function sendUpdateMessage(text) {
+  win.webContents.send('message', text)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
