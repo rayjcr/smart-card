@@ -1,0 +1,144 @@
+*{
+    box-sizing: border-box;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-size: .3rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+input{
+    outline: none;
+}
+input:-webkit-autofill , textarea:-webkit-autofill, select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 100px #EFF1F3 inset;
+}
+#app,.appabs{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.mt100{
+    margin-top: 1rem;
+}
+.mt60{
+    margin-top: .6rem;
+}
+.mt20{
+    margin-top: .2rem;
+}
+.clear:after{
+    content:"\20";
+    display:block;
+    height:0;
+    clear:both;
+}
+.mask{
+    width:100%; 
+    height:100%;
+    top:0;
+    left:0;
+    position:fixed;
+    z-index:500;
+    background:rgba(0, 0, 0, .7);
+}
+.tips{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 450;
+    max-width: 80%;
+    background: rgba(0, 0, 0, .7);
+    padding: .2rem .3rem;
+    border-radius: .2rem;
+    color: #F6f6f6;
+    transform: translate(-50%,-50%);
+    font-size: .3rem;
+}
+.mainpage{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+.sliderLeft-enter-active {
+    animation-name: fadeInLeft;
+    animation-duration: .5s;
+}
+
+.sliderLeft-leave-active {
+    animation-name: fadeOutLeft;
+    animation-duration: .5s;
+}
+.sliderRight-enter-active {
+    animation-name: fadeInRight;
+    animation-duration: .5s;
+}
+
+.sliderRight-leave-active {
+    animation-name: fadeOutRight;
+    animation-duration: .5s;
+}
+
+.sliderRightEx-enter-active {
+    animation-name: fadeInRight;
+    animation-duration: .5s;
+}
+
+.sliderRightEx-leave-active {
+    animation-name: fadeOutLeft;
+    animation-duration: .5s;
+}
+
+
+.sliderRightBack-enter-active {
+    animation-name: fadeInLeft;
+    animation-duration: .5s;
+}
+
+.sliderRightBack-leave-active {
+    animation-name: fadeOutRight;
+    animation-duration: .5s;
+}
+
+
+.fadeIn-enter-active {
+    animation-name: fadeIn;
+    animation-duration: .5s;
+}
+
+.fadeIn-leave-active {
+    animation-name: fadeOut;
+    animation-duration: .5s;
+}
+
+.flipInY-enter-active {
+    animation-name: flipInY;
+    animation-duration: 1s;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
